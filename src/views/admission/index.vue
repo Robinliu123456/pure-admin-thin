@@ -4,4 +4,6 @@ defineOptions({
   name: "Admission"
 });
 </script>
-<template>admission</template>
+<template>
+  <div>Admission</div>
+</template>
