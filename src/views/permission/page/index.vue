@@ -5,10 +5,6 @@ import { type CSSProperties, ref, computed } from "vue";
 import { useUserStoreHook } from "@/store/modules/user";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 
-defineOptions({
-  name: "PermissionPage"
-});
-
 const elStyle = computed((): CSSProperties => {
   return {
     width: "85vw",
