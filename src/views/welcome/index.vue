@@ -1,859 +1,861 @@
-<script>
+<script setup>
 import * as echarts from "echarts";
 import chinaMap from "@/map/china.json"; // 如果想显示中国地图，还需要导入对应的地图文件
+import { onMounted, ref } from "vue";
 // import headerCom from "@/components/HeaderCom.vue";
+const chart = ref(null);
+defineOptions({
+  // name 作为一种规范最好必须写上并且和路由的name保持一致
+  name: "Home"
+});
+onMounted(() => {
+  initMap();
+});
 
-export default {
-  mounted() {
-    this.initMap();
-  },
-  methods: {
-    initMap() {
-      echarts.registerMap("china", { geoJSON: chinaMap });
+const initMap = () => {
+  echarts.registerMap("china", { geoJSON: chinaMap });
 
-      const myChart = echarts.init(this.$refs.chart); // $refs.chart为HTML元素的ref属性值
-      //   var geoCoordMap = {};
-      //   var mapFeatures = echarts.getMap('china').geoJson.features;
+  const myChart = echarts.init(chart.value); // $refs.chart为HTML元素的ref属性值
+  //   var geoCoordMap = {};
+  //   var mapFeatures = echarts.getMap('china').geoJson.features;
 
-      //   mapFeatures.forEach(function(v) {
-      //         // 地区名称
-      //         var name = v.properties.name;
-      //         // 地区经纬度
-      //         geoCoordMap[name] = v.properties.cp;
+  //   mapFeatures.forEach(function(v) {
+  //         // 地区名称
+  //         var name = v.properties.name;
+  //         // 地区经纬度
+  //         geoCoordMap[name] = v.properties.cp;
 
-      //     });
-      //   const option = {
-      //     tooltip: {},
-      //     series: [{
-      //       type: 'map',
-      //       mapType: 'china' // 设置地图类型为中国地图
-      //     }]
-      //   };
+  //     });
+  //   const option = {
+  //     tooltip: {},
+  //     series: [{
+  //       type: 'map',
+  //       mapType: 'china' // 设置地图类型为中国地图
+  //     }]
+  //   };
 
-      //   chart.setOption(option);
-      // var myChart = echarts.init(document.getElementById('provinceStaticBar'));
+  //   chart.setOption(option);
+  // var myChart = echarts.init(document.getElementById('provinceStaticBar'));
 
-      var name_title = "2024年各省市计划招生人数";
-      var subname = "数据来自24年招生计划";
-      var nameColor = " rgb(55, 75, 113)";
-      var name_fontFamily = "等线";
-      var subname_fontSize = 15;
-      var name_fontSize = 18;
-      var mapName = "china";
-      var data = [
+  var name_title = "2024年各省市计划招生人数";
+  var subname = "数据来自24年招生计划";
+  var nameColor = " rgb(55, 75, 113)";
+  var name_fontFamily = "等线";
+  var subname_fontSize = 15;
+  var name_fontSize = 18;
+  var mapName = "china";
+  var data = [
+    {
+      name: "西藏",
+      value: 1974
+    },
+    {
+      name: "青海",
+      value: 3072
+    },
+    {
+      name: "海南",
+      value: 3900
+    },
+    {
+      name: "宁夏",
+      value: 4176
+    },
+    {
+      name: "贵州",
+      value: 10985
+    },
+    {
+      name: "内蒙古",
+      value: 11044
+    },
+    {
+      name: "新疆",
+      value: 12998
+    },
+    {
+      name: "甘肃",
+      value: 15680
+    },
+    {
+      name: "山西",
+      value: 15806
+    },
+    {
+      name: "福建",
+      value: 16639
+    },
+    {
+      name: "广西",
+      value: 17365
+    },
+    {
+      name: "云南",
+      value: 17785
+    },
+    {
+      name: "天津",
+      value: 18560
+    },
+    {
+      name: "江西",
+      value: 19256
+    },
+    {
+      name: "吉林",
+      value: 21267
+    },
+    {
+      name: "重庆",
+      value: 21404
+    },
+    {
+      name: "河北",
+      value: 23437
+    },
+    {
+      name: "湖南",
+      value: 24589
+    },
+    {
+      name: "黑龙江",
+      value: 25802
+    },
+    {
+      name: "河南",
+      value: 26093
+    },
+    {
+      name: "安徽",
+      value: 26327
+    },
+    {
+      name: "四川",
+      value: 31156
+    },
+    {
+      name: "浙江",
+      value: 34096
+    },
+    {
+      name: "山东",
+      value: 37440
+    },
+    {
+      name: "广东",
+      value: 37842
+    },
+    {
+      name: "陕西",
+      value: 38285
+    },
+    {
+      name: "辽宁",
+      value: 39273
+    },
+    {
+      name: "上海",
+      value: 42549
+    },
+    {
+      name: "湖北",
+      value: 43672
+    },
+    {
+      name: "江苏",
+      value: 55816
+    },
+    {
+      name: "北京",
+      value: 61493
+    }
+  ];
+
+  var geoCoordMap = {};
+  var toolTipData = [
+    {
+      name: "西藏",
+      value: [
         {
-          name: "西藏",
+          name: "招生学校",
+          value: 4
+        },
+        {
+          name: "招生人数",
           value: 1974
+        }
+      ]
+    },
+    {
+      name: "青海",
+      value: [
+        {
+          name: "招生学校",
+          value: 3
         },
         {
-          name: "青海",
+          name: "招生人数",
           value: 3072
+        }
+      ]
+    },
+    {
+      name: "海南",
+      value: [
+        {
+          name: "招生学校",
+          value: 5
         },
         {
-          name: "海南",
+          name: "招生人数",
           value: 3900
+        }
+      ]
+    },
+    {
+      name: "宁夏",
+      value: [
+        {
+          name: "招生学校",
+          value: 5
         },
         {
-          name: "宁夏",
+          name: "招生人数",
           value: 4176
+        }
+      ]
+    },
+    {
+      name: "贵州",
+      value: [
+        {
+          name: "招生学校",
+          value: 11
         },
         {
-          name: "贵州",
+          name: "招生人数",
           value: 10985
+        }
+      ]
+    },
+    {
+      name: "内蒙古",
+      value: [
+        {
+          name: "招生学校",
+          value: 12
         },
         {
-          name: "内蒙古",
+          name: "招生人数",
           value: 11044
+        }
+      ]
+    },
+    {
+      name: "新疆",
+      value: [
+        {
+          name: "招生学校",
+          value: 11
         },
         {
-          name: "新疆",
+          name: "招生人数",
           value: 12998
+        }
+      ]
+    },
+    {
+      name: "甘肃",
+      value: [
+        {
+          name: "招生学校",
+          value: 15
         },
         {
-          name: "甘肃",
+          name: "招生人数",
           value: 15680
+        }
+      ]
+    },
+    {
+      name: "山西",
+      value: [
+        {
+          name: "招生学校",
+          value: 16
         },
         {
-          name: "山西",
+          name: "招生人数",
           value: 15806
+        }
+      ]
+    },
+    {
+      name: "福建",
+      value: [
+        {
+          name: "招生学校",
+          value: 16
         },
         {
-          name: "福建",
+          name: "招生人数",
           value: 16639
+        }
+      ]
+    },
+    {
+      name: "广西",
+      value: [
+        {
+          name: "招生学校",
+          value: 15
         },
         {
-          name: "广西",
+          name: "招生人数",
           value: 17365
+        }
+      ]
+    },
+    {
+      name: "云南",
+      value: [
+        {
+          name: "招生学校",
+          value: 15
         },
         {
-          name: "云南",
+          name: "招生人数",
           value: 17785
+        }
+      ]
+    },
+    {
+      name: "天津",
+      value: [
+        {
+          name: "招生学校",
+          value: 29
         },
         {
-          name: "天津",
+          name: "招生人数",
           value: 18560
+        }
+      ]
+    },
+    {
+      name: "江西",
+      value: [
+        {
+          name: "招生学校",
+          value: 18
         },
         {
-          name: "江西",
+          name: "招生人数",
           value: 19256
+        }
+      ]
+    },
+    {
+      name: "吉林",
+      value: [
+        {
+          name: "招生学校",
+          value: 23
         },
         {
-          name: "吉林",
+          name: "招生人数",
           value: 21267
+        }
+      ]
+    },
+    {
+      name: "重庆",
+      value: [
+        {
+          name: "招生学校",
+          value: 17
         },
         {
-          name: "重庆",
+          name: "招生人数",
           value: 21404
+        }
+      ]
+    },
+    {
+      name: "河北",
+      value: [
+        {
+          name: "招生学校",
+          value: 26
         },
         {
-          name: "河北",
+          name: "招生人数",
           value: 23437
+        }
+      ]
+    },
+    {
+      name: "湖南",
+      value: [
+        {
+          name: "招生学校",
+          value: 24
         },
         {
-          name: "湖南",
+          name: "招生人数",
           value: 24589
+        }
+      ]
+    },
+    {
+      name: "黑龙江",
+      value: [
+        {
+          name: "招生学校",
+          value: 30
         },
         {
-          name: "黑龙江",
+          name: "招生人数",
           value: 25802
+        }
+      ]
+    },
+    {
+      name: "河南",
+      value: [
+        {
+          name: "招生学校",
+          value: 27
         },
         {
-          name: "河南",
+          name: "招生人数",
           value: 26093
+        }
+      ]
+    },
+    {
+      name: "安徽",
+      value: [
+        {
+          name: "招生学校",
+          value: 22
         },
         {
-          name: "安徽",
+          name: "招生人数",
           value: 26327
+        }
+      ]
+    },
+    {
+      name: "四川",
+      value: [
+        {
+          name: "招生学校",
+          value: 34
         },
         {
-          name: "四川",
+          name: "招生人数",
           value: 31156
+        }
+      ]
+    },
+    {
+      name: "浙江",
+      value: [
+        {
+          name: "招生学校",
+          value: 32
         },
         {
-          name: "浙江",
+          name: "招生人数",
           value: 34096
+        }
+      ]
+    },
+    {
+      name: "山东",
+      value: [
+        {
+          name: "招生学校",
+          value: 37
         },
         {
-          name: "山东",
+          name: "招生人数",
           value: 37440
+        }
+      ]
+    },
+    {
+      name: "广东",
+      value: [
+        {
+          name: "招生学校",
+          value: 32
         },
         {
-          name: "广东",
+          name: "招生人数",
           value: 37842
+        }
+      ]
+    },
+    {
+      name: "陕西",
+      value: [
+        {
+          name: "招生学校",
+          value: 54
         },
         {
-          name: "陕西",
+          name: "招生人数",
           value: 38285
+        }
+      ]
+    },
+    {
+      name: "辽宁",
+      value: [
+        {
+          name: "招生学校",
+          value: 45
         },
         {
-          name: "辽宁",
+          name: "招生人数",
           value: 39273
+        }
+      ]
+    },
+    {
+      name: "上海",
+      value: [
+        {
+          name: "招生学校",
+          value: 48
         },
         {
-          name: "上海",
+          name: "招生人数",
           value: 42549
+        }
+      ]
+    },
+    {
+      name: "湖北",
+      value: [
+        {
+          name: "招生学校",
+          value: 48
         },
         {
-          name: "湖北",
+          name: "招生人数",
           value: 43672
+        }
+      ]
+    },
+    {
+      name: "江苏",
+      value: [
+        {
+          name: "招生学校",
+          value: 50
         },
         {
-          name: "江苏",
+          name: "招生人数",
           value: 55816
+        }
+      ]
+    },
+    {
+      name: "北京",
+      value: [
+        {
+          name: "招生学校",
+          value: 152
         },
         {
-          name: "北京",
+          name: "招生人数",
           value: 61493
         }
-      ];
-
-      var geoCoordMap = {};
-      var toolTipData = [
-        {
-          name: "西藏",
-          value: [
-            {
-              name: "招生学校",
-              value: 4
-            },
-            {
-              name: "招生人数",
-              value: 1974
-            }
-          ]
-        },
-        {
-          name: "青海",
-          value: [
-            {
-              name: "招生学校",
-              value: 3
-            },
-            {
-              name: "招生人数",
-              value: 3072
-            }
-          ]
-        },
-        {
-          name: "海南",
-          value: [
-            {
-              name: "招生学校",
-              value: 5
-            },
-            {
-              name: "招生人数",
-              value: 3900
-            }
-          ]
-        },
-        {
-          name: "宁夏",
-          value: [
-            {
-              name: "招生学校",
-              value: 5
-            },
-            {
-              name: "招生人数",
-              value: 4176
-            }
-          ]
-        },
-        {
-          name: "贵州",
-          value: [
-            {
-              name: "招生学校",
-              value: 11
-            },
-            {
-              name: "招生人数",
-              value: 10985
-            }
-          ]
-        },
-        {
-          name: "内蒙古",
-          value: [
-            {
-              name: "招生学校",
-              value: 12
-            },
-            {
-              name: "招生人数",
-              value: 11044
-            }
-          ]
-        },
-        {
-          name: "新疆",
-          value: [
-            {
-              name: "招生学校",
-              value: 11
-            },
-            {
-              name: "招生人数",
-              value: 12998
-            }
-          ]
-        },
-        {
-          name: "甘肃",
-          value: [
-            {
-              name: "招生学校",
-              value: 15
-            },
-            {
-              name: "招生人数",
-              value: 15680
-            }
-          ]
-        },
-        {
-          name: "山西",
-          value: [
-            {
-              name: "招生学校",
-              value: 16
-            },
-            {
-              name: "招生人数",
-              value: 15806
-            }
-          ]
-        },
-        {
-          name: "福建",
-          value: [
-            {
-              name: "招生学校",
-              value: 16
-            },
-            {
-              name: "招生人数",
-              value: 16639
-            }
-          ]
-        },
-        {
-          name: "广西",
-          value: [
-            {
-              name: "招生学校",
-              value: 15
-            },
-            {
-              name: "招生人数",
-              value: 17365
-            }
-          ]
-        },
-        {
-          name: "云南",
-          value: [
-            {
-              name: "招生学校",
-              value: 15
-            },
-            {
-              name: "招生人数",
-              value: 17785
-            }
-          ]
-        },
-        {
-          name: "天津",
-          value: [
-            {
-              name: "招生学校",
-              value: 29
-            },
-            {
-              name: "招生人数",
-              value: 18560
-            }
-          ]
-        },
-        {
-          name: "江西",
-          value: [
-            {
-              name: "招生学校",
-              value: 18
-            },
-            {
-              name: "招生人数",
-              value: 19256
-            }
-          ]
-        },
-        {
-          name: "吉林",
-          value: [
-            {
-              name: "招生学校",
-              value: 23
-            },
-            {
-              name: "招生人数",
-              value: 21267
-            }
-          ]
-        },
-        {
-          name: "重庆",
-          value: [
-            {
-              name: "招生学校",
-              value: 17
-            },
-            {
-              name: "招生人数",
-              value: 21404
-            }
-          ]
-        },
-        {
-          name: "河北",
-          value: [
-            {
-              name: "招生学校",
-              value: 26
-            },
-            {
-              name: "招生人数",
-              value: 23437
-            }
-          ]
-        },
-        {
-          name: "湖南",
-          value: [
-            {
-              name: "招生学校",
-              value: 24
-            },
-            {
-              name: "招生人数",
-              value: 24589
-            }
-          ]
-        },
-        {
-          name: "黑龙江",
-          value: [
-            {
-              name: "招生学校",
-              value: 30
-            },
-            {
-              name: "招生人数",
-              value: 25802
-            }
-          ]
-        },
-        {
-          name: "河南",
-          value: [
-            {
-              name: "招生学校",
-              value: 27
-            },
-            {
-              name: "招生人数",
-              value: 26093
-            }
-          ]
-        },
-        {
-          name: "安徽",
-          value: [
-            {
-              name: "招生学校",
-              value: 22
-            },
-            {
-              name: "招生人数",
-              value: 26327
-            }
-          ]
-        },
-        {
-          name: "四川",
-          value: [
-            {
-              name: "招生学校",
-              value: 34
-            },
-            {
-              name: "招生人数",
-              value: 31156
-            }
-          ]
-        },
-        {
-          name: "浙江",
-          value: [
-            {
-              name: "招生学校",
-              value: 32
-            },
-            {
-              name: "招生人数",
-              value: 34096
-            }
-          ]
-        },
-        {
-          name: "山东",
-          value: [
-            {
-              name: "招生学校",
-              value: 37
-            },
-            {
-              name: "招生人数",
-              value: 37440
-            }
-          ]
-        },
-        {
-          name: "广东",
-          value: [
-            {
-              name: "招生学校",
-              value: 32
-            },
-            {
-              name: "招生人数",
-              value: 37842
-            }
-          ]
-        },
-        {
-          name: "陕西",
-          value: [
-            {
-              name: "招生学校",
-              value: 54
-            },
-            {
-              name: "招生人数",
-              value: 38285
-            }
-          ]
-        },
-        {
-          name: "辽宁",
-          value: [
-            {
-              name: "招生学校",
-              value: 45
-            },
-            {
-              name: "招生人数",
-              value: 39273
-            }
-          ]
-        },
-        {
-          name: "上海",
-          value: [
-            {
-              name: "招生学校",
-              value: 48
-            },
-            {
-              name: "招生人数",
-              value: 42549
-            }
-          ]
-        },
-        {
-          name: "湖北",
-          value: [
-            {
-              name: "招生学校",
-              value: 48
-            },
-            {
-              name: "招生人数",
-              value: 43672
-            }
-          ]
-        },
-        {
-          name: "江苏",
-          value: [
-            {
-              name: "招生学校",
-              value: 50
-            },
-            {
-              name: "招生人数",
-              value: 55816
-            }
-          ]
-        },
-        {
-          name: "北京",
-          value: [
-            {
-              name: "招生学校",
-              value: 152
-            },
-            {
-              name: "招生人数",
-              value: 61493
-            }
-          ]
-        }
-      ];
-
-      /*获取地图数据*/
-      myChart.showLoading();
-      var mapFeatures = echarts.getMap(mapName).geoJson.features;
-      myChart.hideLoading();
-      mapFeatures.forEach(function (v) {
-        // 地区名称
-        var name = v.properties.name;
-        // 地区经纬度
-        geoCoordMap[name] = v.properties.cp;
-      });
-
-      // console.log("============geoCoordMap===================")
-      // console.log(geoCoordMap)
-      // console.log("================data======================")
-      console.log(data);
-      console.log(toolTipData);
-      var max = 70000,
-        min = 9; // todo
-      var maxSize4Pin = 100,
-        minSize4Pin = 20;
-
-      var convertData = function (data) {
-        var res = [];
-        for (var i = 0; i < data.length; i++) {
-          var geoCoord = geoCoordMap[data[i].name];
-          if (geoCoord) {
-            res.push({
-              name: data[i].name,
-              value: geoCoord.concat(data[i].value)
-            });
-          }
-        }
-        return res;
-      };
-      const option = {
-        title: {
-          text: name_title,
-          subtext: subname,
-          x: "center",
-          textStyle: {
-            color: nameColor,
-            fontFamily: name_fontFamily,
-            fontSize: name_fontSize
-          },
-          subtextStyle: {
-            fontSize: subname_fontSize,
-            fontFamily: name_fontFamily
-          }
-        },
-        tooltip: {
-          trigger: "item",
-          formatter: function (params) {
-            if (typeof params.value[2] == "undefined") {
-              var toolTiphtml = "";
-              for (var i = 0; i < toolTipData.length; i++) {
-                if (params.name == toolTipData[i].name) {
-                  toolTiphtml += toolTipData[i].name + ":<br>";
-                  for (var j = 0; j < toolTipData[i].value.length; j++) {
-                    toolTiphtml +=
-                      toolTipData[i].value[j].name +
-                      ":" +
-                      toolTipData[i].value[j].value +
-                      "<br>";
-                  }
-                }
-              }
-              console.log(toolTiphtml);
-              // console.log(convertData(data))
-              return toolTiphtml;
-            } else {
-              let toolTiphtml = "";
-              for (let i = 0; i < toolTipData.length; i++) {
-                if (params.name == toolTipData[i].name) {
-                  toolTiphtml += toolTipData[i].name + ":<br>";
-                  for (let j = 0; j < toolTipData[i].value.length; j++) {
-                    toolTiphtml +=
-                      toolTipData[i].value[j].name +
-                      ":" +
-                      toolTipData[i].value[j].value +
-                      "<br>";
-                  }
-                }
-              }
-              console.log(toolTiphtml);
-              // console.log(convertData(data))
-              return toolTiphtml;
-            }
-          }
-        },
-        // legend: {
-        //     orient: 'vertical',
-        //     y: 'bottom',
-        //     x: 'right',
-        //     data: ['credit_pm2.5'],
-        //     textStyle: {
-        //         color: '#fff'
-        //     }
-        // },
-        visualMap: {
-          show: true,
-          min: 0,
-          max: 70000,
-          left: "left",
-          top: "bottom",
-          text: ["多", "少"], // 文本，默认为数值文本
-          calculable: true,
-          seriesIndex: [1],
-          inRange: {
-            // color: ['#3B5077', '#031525'] // 蓝黑
-            // color: ['#ffc0cb', '#800080'] // 红紫
-            // color: ['#3C3B3F', '#605C3C'] // 黑绿
-            // color: ['#0f0c29', '#302b63', '#24243e'] // 黑紫黑
-            // color: ['#23074d', '#cc5333'] // 紫红
-            // color: ['#00467F', '#A5CC82'] // 蓝绿
-            // color: ['#1488CC', '#2B32B2'] // 浅蓝
-            // color: ['#00467F', '#A5CC82'] // 蓝绿
-            // color: ['#00467F', '#A5CC82'] // 蓝绿
-            // color: ['#00467F', '#A5CC82'] // 蓝绿
-            color: ["#00467F", "#A5CC82"] // 蓝绿
-          }
-        },
-        /*工具按钮组*/
-        // toolbox: {
-        //     show: true,
-        //     orient: 'vertical',
-        //     left: 'right',
-        //     top: 'center',
-        //     feature: {
-        //         dataView: {
-        //             readOnly: false
-        //         },
-        //         restore: {},
-        //         saveAsImage: {}
-        //     }
-        // },
-        geo: {
-          show: true,
-          map: mapName,
-          label: {
-            normal: {
-              show: false
-            },
-            emphasis: {
-              show: false
-            }
-          },
-          roam: true,
-          itemStyle: {
-            normal: {
-              areaColor: "#031525",
-              borderColor: "#3B5077"
-            },
-            emphasis: {
-              areaColor: "#2B91B7"
-            }
-          }
-        },
-        series: [
-          {
-            name: "散点",
-            type: "scatter",
-            coordinateSystem: "geo",
-            data: convertData(data),
-            symbolSize: function (val) {
-              return val[2] / 10000;
-            },
-            label: {
-              normal: {
-                formatter: "{b}",
-                position: "right",
-                show: true
-              },
-              emphasis: {
-                show: true
-              }
-            },
-            itemStyle: {
-              normal: {
-                color: "#05C3F9"
-              }
-            }
-          },
-          {
-            type: "map",
-            map: mapName,
-            geoIndex: 0,
-            aspectScale: 0.75, //长宽比
-            showLegendSymbol: false, // 存在legend时显示
-            label: {
-              normal: {
-                show: true
-              },
-              emphasis: {
-                show: false,
-                textStyle: {
-                  color: "#fff"
-                }
-              }
-            },
-            roam: true,
-            itemStyle: {
-              normal: {
-                areaColor: "#031525",
-                borderColor: "#3B5077"
-              },
-              emphasis: {
-                areaColor: "#2B91B7"
-              }
-            },
-            animation: false,
-            data: data
-          },
-          {
-            name: "点",
-            type: "scatter",
-            coordinateSystem: "geo",
-            symbol: "pin", //气泡
-            symbolSize: function (val) {
-              var a = (maxSize4Pin - minSize4Pin) / (max - min);
-              var b = minSize4Pin - a * min;
-              b = maxSize4Pin - a * max;
-              return (a * val[2]) / 10000 + b;
-            },
-            label: {
-              normal: {
-                show: true,
-                textStyle: {
-                  color: "#fff",
-                  fontSize: 9
-                }
-              }
-            },
-            itemStyle: {
-              normal: {
-                color: "#F62157" //标志颜色
-              }
-            },
-            zlevel: 6,
-            data: convertData(data)
-          },
-          {
-            name: "Top 5",
-            type: "effectScatter",
-            coordinateSystem: "geo",
-            data: convertData(
-              data
-                .sort(function (a, b) {
-                  return b.value - a.value;
-                })
-                .slice(0, 10)
-            ),
-            symbolSize: function (val) {
-              return val[2] / 10000;
-            },
-            showEffectOn: "render",
-            rippleEffect: {
-              brushType: "stroke"
-            },
-            hoverAnimation: true,
-            label: {
-              normal: {
-                formatter: "{b}",
-                position: "right",
-                show: true
-              }
-            },
-            itemStyle: {
-              normal: {
-                color: "yellow",
-                shadowBlur: 10,
-                shadowColor: "yellow"
-              }
-            },
-            zlevel: 1
-          }
-        ]
-      };
-      myChart.setOption(option);
+      ]
     }
-  }
+  ];
+
+  /*获取地图数据*/
+  myChart.showLoading();
+  var mapFeatures = echarts.getMap(mapName).geoJson.features;
+  myChart.hideLoading();
+  mapFeatures.forEach(function (v) {
+    // 地区名称
+    var name = v.properties.name;
+    // 地区经纬度
+    geoCoordMap[name] = v.properties.cp;
+  });
+
+  // console.log("============geoCoordMap===================")
+  // console.log(geoCoordMap)
+  // console.log("================data======================")
+  console.log(data);
+  console.log(toolTipData);
+  var max = 70000,
+    min = 9; // todo
+  var maxSize4Pin = 100,
+    minSize4Pin = 20;
+
+  var convertData = function (data) {
+    var res = [];
+    for (var i = 0; i < data.length; i++) {
+      var geoCoord = geoCoordMap[data[i].name];
+      if (geoCoord) {
+        res.push({
+          name: data[i].name,
+          value: geoCoord.concat(data[i].value)
+        });
+      }
+    }
+    return res;
+  };
+  const option = {
+    title: {
+      text: name_title,
+      subtext: subname,
+      x: "center",
+      textStyle: {
+        color: nameColor,
+        fontFamily: name_fontFamily,
+        fontSize: name_fontSize
+      },
+      subtextStyle: {
+        fontSize: subname_fontSize,
+        fontFamily: name_fontFamily
+      }
+    },
+    tooltip: {
+      trigger: "item",
+      formatter: function (params) {
+        if (typeof params.value[2] == "undefined") {
+          var toolTiphtml = "";
+          for (var i = 0; i < toolTipData.length; i++) {
+            if (params.name == toolTipData[i].name) {
+              toolTiphtml += toolTipData[i].name + ":<br>";
+              for (var j = 0; j < toolTipData[i].value.length; j++) {
+                toolTiphtml +=
+                  toolTipData[i].value[j].name +
+                  ":" +
+                  toolTipData[i].value[j].value +
+                  "<br>";
+              }
+            }
+          }
+          console.log(toolTiphtml);
+          // console.log(convertData(data))
+          return toolTiphtml;
+        } else {
+          let toolTiphtml = "";
+          for (let i = 0; i < toolTipData.length; i++) {
+            if (params.name == toolTipData[i].name) {
+              toolTiphtml += toolTipData[i].name + ":<br>";
+              for (let j = 0; j < toolTipData[i].value.length; j++) {
+                toolTiphtml +=
+                  toolTipData[i].value[j].name +
+                  ":" +
+                  toolTipData[i].value[j].value +
+                  "<br>";
+              }
+            }
+          }
+          console.log(toolTiphtml);
+          // console.log(convertData(data))
+          return toolTiphtml;
+        }
+      }
+    },
+    // legend: {
+    //     orient: 'vertical',
+    //     y: 'bottom',
+    //     x: 'right',
+    //     data: ['credit_pm2.5'],
+    //     textStyle: {
+    //         color: '#fff'
+    //     }
+    // },
+    visualMap: {
+      show: true,
+      min: 0,
+      max: 70000,
+      left: "left",
+      top: "bottom",
+      text: ["多", "少"], // 文本，默认为数值文本
+      calculable: true,
+      seriesIndex: [1],
+      inRange: {
+        // color: ['#3B5077', '#031525'] // 蓝黑
+        // color: ['#ffc0cb', '#800080'] // 红紫
+        // color: ['#3C3B3F', '#605C3C'] // 黑绿
+        // color: ['#0f0c29', '#302b63', '#24243e'] // 黑紫黑
+        // color: ['#23074d', '#cc5333'] // 紫红
+        // color: ['#00467F', '#A5CC82'] // 蓝绿
+        // color: ['#1488CC', '#2B32B2'] // 浅蓝
+        // color: ['#00467F', '#A5CC82'] // 蓝绿
+        // color: ['#00467F', '#A5CC82'] // 蓝绿
+        // color: ['#00467F', '#A5CC82'] // 蓝绿
+        color: ["#00467F", "#A5CC82"] // 蓝绿
+      }
+    },
+    /*工具按钮组*/
+    // toolbox: {
+    //     show: true,
+    //     orient: 'vertical',
+    //     left: 'right',
+    //     top: 'center',
+    //     feature: {
+    //         dataView: {
+    //             readOnly: false
+    //         },
+    //         restore: {},
+    //         saveAsImage: {}
+    //     }
+    // },
+    geo: {
+      show: true,
+      map: mapName,
+      label: {
+        normal: {
+          show: false
+        },
+        emphasis: {
+          show: false
+        }
+      },
+      roam: true,
+      itemStyle: {
+        normal: {
+          areaColor: "#031525",
+          borderColor: "#3B5077"
+        },
+        emphasis: {
+          areaColor: "#2B91B7"
+        }
+      }
+    },
+    series: [
+      {
+        name: "散点",
+        type: "scatter",
+        coordinateSystem: "geo",
+        data: convertData(data),
+        symbolSize: function (val) {
+          return val[2] / 10000;
+        },
+        label: {
+          normal: {
+            formatter: "{b}",
+            position: "right",
+            show: true
+          },
+          emphasis: {
+            show: true
+          }
+        },
+        itemStyle: {
+          normal: {
+            color: "#05C3F9"
+          }
+        }
+      },
+      {
+        type: "map",
+        map: mapName,
+        geoIndex: 0,
+        aspectScale: 0.75, //长宽比
+        showLegendSymbol: false, // 存在legend时显示
+        label: {
+          normal: {
+            show: true
+          },
+          emphasis: {
+            show: false,
+            textStyle: {
+              color: "#fff"
+            }
+          }
+        },
+        roam: true,
+        itemStyle: {
+          normal: {
+            areaColor: "#031525",
+            borderColor: "#3B5077"
+          },
+          emphasis: {
+            areaColor: "#2B91B7"
+          }
+        },
+        animation: false,
+        data: data
+      },
+      {
+        name: "点",
+        type: "scatter",
+        coordinateSystem: "geo",
+        symbol: "pin", //气泡
+        symbolSize: function (val) {
+          var a = (maxSize4Pin - minSize4Pin) / (max - min);
+          var b = minSize4Pin - a * min;
+          b = maxSize4Pin - a * max;
+          return (a * val[2]) / 10000 + b;
+        },
+        label: {
+          normal: {
+            show: true,
+            textStyle: {
+              color: "#fff",
+              fontSize: 9
+            }
+          }
+        },
+        itemStyle: {
+          normal: {
+            color: "#F62157" //标志颜色
+          }
+        },
+        zlevel: 6,
+        data: convertData(data)
+      },
+      {
+        name: "Top 5",
+        type: "effectScatter",
+        coordinateSystem: "geo",
+        data: convertData(
+          data
+            .sort(function (a, b) {
+              return b.value - a.value;
+            })
+            .slice(0, 10)
+        ),
+        symbolSize: function (val) {
+          return val[2] / 10000;
+        },
+        showEffectOn: "render",
+        rippleEffect: {
+          brushType: "stroke"
+        },
+        hoverAnimation: true,
+        label: {
+          normal: {
+            formatter: "{b}",
+            position: "right",
+            show: true
+          }
+        },
+        itemStyle: {
+          normal: {
+            color: "yellow",
+            shadowBlur: 10,
+            shadowColor: "yellow"
+          }
+        },
+        zlevel: 1
+      }
+    ]
+  };
+  myChart.setOption(option);
 };
 </script>
 
