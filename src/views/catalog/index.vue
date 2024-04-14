@@ -83,99 +83,130 @@ const tableData = [
 
 <template>
   <div>
-    <el-form :inline="true" :model="formInline" class="demo-form-inline">
-      <el-row :gutter="24">
+    <el-form
+      :model="formInline"
+      class="demo-form-inline"
+      label-position="right"
+      label-width="auto"
+    >
+      <el-row :gutter="20">
         <el-col :span="8">
-          <el-form-item label="地区（比如东北地区）">
+          <el-form-item label="地区">
             <el-input
               v-model="formInline.area"
-              placeholder="Approved by"
+              placeholder="（比如东北地区）"
               clearable
             />
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="省份（比如辽宁省）">
+          <el-form-item label="省份">
             <el-input
               v-model="formInline.provinceName"
-              placeholder="Approved by"
+              placeholder="（比如辽宁省)"
               clearable
             />
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="学校类型（比如211、985或普通）">
+          <el-form-item label="学校类型">
             <el-input
               v-model="formInline.schoolRank"
-              placeholder="Approved by"
+              placeholder="(比如211、985或普通）"
               clearable
             />
           </el-form-item>
         </el-col>
       </el-row>
-
-      <el-form-item label="学校名称（比如大连理工大学）">
-        <el-input
-          v-model="formInline.schoolName"
-          placeholder="Approved by"
-          clearable
-        />
-      </el-form-item>
-      <el-form-item label="院系名称（比如计算机学院）">
-        <el-input
-          v-model="formInline.departmentName"
-          placeholder="Approved by"
-          clearable
-        />
-      </el-form-item>
-      <el-form-item label="专业排名（比如A+）">
-        <el-input
-          v-model="formInline.majorRank"
-          placeholder="Approved by"
-          clearable
-        />
-      </el-form-item>
-      <el-form-item label="二级专业名称（比如石油与天然气工程）">
-        <el-input
-          v-model="formInline.subMajorName"
-          placeholder="Approved by"
-          clearable
-        />
-      </el-form-item>
-      <el-form-item label="三级专业名称（比如油气储运工程）">
-        <el-input
-          v-model="formInline.detailMajorName"
-          placeholder="Approved by"
-          clearable
-        />
-      </el-form-item>
-      <el-form-item label="专业方向（具体研究方向）">
-        <el-input
-          v-model="formInline.majorTrend"
-          placeholder="Approved by"
-          clearable
-        />
-      </el-form-item>
-      <el-form-item label="英语（比如英语一）">
-        <el-input
-          v-model="formInline.detailMajorName"
-          placeholder="Approved by"
-          clearable
-        />
-      </el-form-item>
-      <el-form-item label="专业课一/数学（比如数学一）">
-        <el-input
-          v-model="formInline.detailMajorName"
-          placeholder="Approved by"
-          clearable
-        />
-      </el-form-item>
-      <el-form-item label="专业课二（比如408）">
-        <el-input
-          v-model="formInline.detailMajorName"
-          placeholder="Approved by"
-          clearable
-        />
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <el-form-item label="学校名称">
+            <el-input
+              v-model="formInline.schoolName"
+              placeholder="（比如大连理工大学）"
+              clearable
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="院系名称">
+            <el-input
+              v-model="formInline.departmentName"
+              placeholder="（比如计算机学院）"
+              clearable
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="专业排名">
+            <el-input
+              v-model="formInline.majorRank"
+              placeholder="（比如A+）"
+              clearable
+            />
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <el-form-item label="二级专业名称">
+            <el-input
+              v-model="formInline.subMajorName"
+              placeholder="（比如石油与天然气工程）"
+              clearable
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="三级专业名称">
+            <el-input
+              v-model="formInline.detailMajorName"
+              placeholder="（比如油气储运工程）"
+              clearable
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="专业方向">
+            <el-input
+              v-model="formInline.majorTrend"
+              placeholder="（具体研究方向）"
+              clearable
+            />
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <el-form-item label="英语">
+            <el-input
+              v-model="formInline.detailMajorName"
+              placeholder="（比如英语一）"
+              clearable
+            /> </el-form-item
+        ></el-col>
+        <el-col :span="8">
+          <el-form-item label="专业课一/数学">
+            <el-input
+              v-model="formInline.detailMajorName"
+              placeholder="（比如数学一）"
+              clearable
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="专业课二">
+            <el-input
+              v-model="formInline.detailMajorName"
+              placeholder="（比如408）"
+              clearable
+            />
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-form-item style="float: right">
+        <el-button type="warning" @click="onSubmit">清空</el-button>
+        <el-button type="primary" @click="onSubmit">查询</el-button>
       </el-form-item>
       <el-alert
         title="（温馨提示）整理数据和开发系统耗费了大量的人力和费用，为了可持续发展，同时避免爬虫盗取数据，免费账号仅提供以下学校的详细信息，统计类信息来自所有876所的数据，我们只对详细信息做了限制，希望同学们能够理解：
@@ -184,11 +215,6 @@ const tableData = [
         type="success"
         :closable="false"
       />
-
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">清空</el-button>
-        <el-button type="primary" @click="onSubmit">查询</el-button>
-      </el-form-item>
     </el-form>
     <el-tabs type="border-card" class="demo-tabs">
       <el-tab-pane>
@@ -245,6 +271,15 @@ const tableData = [
     </el-tabs>
   </div>
 </template>
+<style>
+.demo-form-inline .el-input {
+  --el-input-width: 20vw;
+}
+
+.demo-form-inline .el-select {
+  --el-select-width: 220px;
+}
+</style>
 
 <!-- <script lang="ts" setup>
 defineOptions({
